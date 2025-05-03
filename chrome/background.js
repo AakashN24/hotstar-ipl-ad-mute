@@ -18,12 +18,13 @@ chrome.webRequest.onBeforeRequest.addListener(
   async (details) => {
     const url = new URL(details.url);
     const adName = url.searchParams.get("adName");
+      
     console.log(`Ad id: ${adName}`);
 
     if (adName) {
       const adIdMatch = targetAdIds.some((id) => adName.includes(id));
 
-      if (adIdMatch) {
+      // if (adIdMatch) {
         let durationSec = 10;
         for (const regex of durationRegexes) {
           const match = adName.match(regex);
@@ -31,7 +32,7 @@ chrome.webRequest.onBeforeRequest.addListener(
             durationSec = parseInt(match[1], 10);
             break;
           }
-        }
+        // }
 
         console.log(`Muting ${adName} for ${durationSec} seconds`);
 
